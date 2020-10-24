@@ -38,34 +38,30 @@ class Trip:
             print('This is awkward, but you are trying to exit from a station unknown to me.')
 
     def get_final_cost(self):
-        trip_cost = 0
-        trip_zones = self.get_trip_zones(self.origin, self.destination)
-        zone_one_crossed = self.trip_include_zone_one(self.origin, self.destination)
+        possible_fares = []
+        for o in self.origin:
+            for d in self.destination:
+                possible_fares.append(self.get_possible_cost(o, d))
+        return min(possible_fares)
+
+
+    def get_possible_cost(self, origin_zone, destination_zone):
+        cost = 0.0
         # Anywhere in Zone 1
-        if (trip_zones == 1 and zone_one_crossed):      
-            trip_cost = fares['cost_anywhere_zone_one']
+        if (origin_zone == 1 and destination_zone == 1 ):
+            cost = fares['cost_anywhere_zone_one']
         # Any one zone outside zone 1
-        elif (trip_zones == 1 and not zone_one_crossed):    
-            trip_cost = fares['cost_one_zone_outside_zone_one']
+        if (origin_zone != 1 and destination_zone != 1 and abs(origin_zone - destination_zone) == 0 ):
+            cost = fares['cost_one_zone_outside_zone_one']
         # Any two zones including zone 1
-        elif (trip_zones == 2 and zone_one_crossed):        
-            trip_cost = fares['cost_two_zones_including_zone_one']
+        elif((origin_zone == 1 or destination_zone == 1) and abs(origin_zone - destination_zone) == 1 ):
+            cost = fares['cost_two_zones_including_zone_one']
         # Any two zones excluding zone 1
-        elif (trip_zones == 2 and not zone_one_crossed):    
-            trip_cost = fares['cost_two_zones_excluding_zone_one']
+        elif((origin_zone != 1 and destination_zone != 1) and abs(origin_zone - destination_zone) == 1 ):
+            cost = fares['cost_two_zones_excluding_zone_one']
         # More than two zones (3+)
-        elif (trip_zones > 2):                             
-            trip_cost = fares['more_than_two_zones']
-        return trip_cost
+        elif(abs(origin_zone - destination_zone) > 1):
+            cost = fares['more_than_two_zones']
+        
+        return cost
 
-    def get_trip_zones(self, origin, destination):
-        zones_visited = sys.maxint
-        for o in origin:
-            for d in destination:
-                if (abs(o - d) + 1 < zones_visited):
-                    zones_visited = abs(o - d) + 1
-
-        return zones_visited
-
-    def trip_include_zone_one(self, origin, destination):
-        return ((len(origin) == 1 and 1 in origin) or ((len(destination) == 1 and 1 in destination)))

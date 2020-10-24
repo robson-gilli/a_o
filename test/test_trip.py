@@ -72,59 +72,20 @@ def test_trip_tube_more_than_two_zones():
 
         assert round(c.balance, 2) == 0.0
         
-def test_trip_get_trip_zones_one_zone():
-        c = Card()
-        c.add_credit(3.2)
+def test_trip_get_possible_cost():
+    t = Trip()
 
-        t = Trip()
-        ret = t.get_trip_zones([2],[2])
-        assert ret == 1
+    cost = t.get_possible_cost(1, 1)
+    assert cost == 2.5
 
-def test_trip_get_trip_zones_two_zone():
-        c = Card()
-        c.add_credit(3.2)
+    cost = t.get_possible_cost(2, 2)
+    assert cost == 2.0
 
-        t = Trip()
-        ret = t.get_trip_zones([2],[1])
-        assert ret == 2
+    cost = t.get_possible_cost(1, 2)
+    assert cost == 3.0
 
-def test_trip_get_trip_zones_three_zone():
-        c = Card()
-        c.add_credit(3.2)
+    cost = t.get_possible_cost(3, 2)
+    assert cost == 2.25
 
-        t = Trip()
-        ret = t.get_trip_zones([3],[1])
-        assert ret == 3
-
-def test_trip_get_trip_zones_one_zone_intersection():
-        c = Card()
-        c.add_credit(3.2)
-
-        t = Trip()
-        ret = t.get_trip_zones([2],[1,2])
-        assert ret == 1
-
-def test_trip_trip_include_zone_one_true():
-        c = Card()
-        c.add_credit(3.2)
-
-        t = Trip()
-        ret = t.trip_include_zone_one([1],[1,2])
-        assert ret == True
-
-def test_trip_trip_include_zone_one_false():
-        c = Card()
-        c.add_credit(3.2)
-
-        t = Trip()
-        ret = t.trip_include_zone_one([1,2],[1,2])
-        assert ret == False
-
-        ret = t.trip_include_zone_one([2],[3])
-        assert ret == False
-
-        ret = t.trip_include_zone_one([2],[2])
-        assert ret == False
-
-        ret = t.trip_include_zone_one([2,3],[2])
-        assert ret == False
+    cost = t.get_possible_cost(3, 1)
+    assert cost == 3.2

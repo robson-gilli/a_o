@@ -34,3 +34,13 @@ print("Tube trip from Earl’s court to Hammersmith. Trip cost = " + str(t3.cost
 print("Your card balance is " + str(c.balance))
 print("=========================================================")
 
+# c = Card()
+# c.add_credit(3.2)
+
+# t = Trip()
+
+# ret = t.get_trip_zones([1,2], [1,3])
+# print(ret)
+# ret  = t.trip_include_zone_one([1,2], [1,3])
+# print(ret)
+
