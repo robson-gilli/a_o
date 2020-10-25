@@ -7,7 +7,7 @@ def test_trip_bus_trip():
     c.add_credit(1.8)
 
     t = Trip()
-    t.bus_journey(c)
+    t.bus_trip(c)
 
     assert c.balance == 0.0
 
@@ -17,7 +17,7 @@ def test_trip_bus_trip_not_enough_balance():
         c.add_credit(1.0)
 
         t = Trip()
-        t.bus_journey(c)
+        t.bus_trip(c)
     assert "Balance is insuficient to take a bus trip" in str(excinfo.value)
 
     

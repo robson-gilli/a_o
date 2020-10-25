@@ -10,7 +10,7 @@ class Trip:
         self.origin = ''
         self.destination = ''
 
-    def bus_journey(self, card):
+    def bus_trip(self, card):
         if (card.balance >= fares['bus_cost']):
             card.add_debit(fares['bus_cost'])
             self.cost = fares['bus_cost']

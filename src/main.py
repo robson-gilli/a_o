@@ -21,7 +21,7 @@ print("Your card balance is " + str(c.balance))
 print("\n=========================================================")
 print("Starting Trip 328 bus from Earl’s Court to Chelsea")
 t2 = Trip()
-t2.bus_journey(c)
+t2.bus_trip(c)
 print("Trip 328 bus from Earl’s Court to Chelsea. Trip cost = " + str(t2.cost))
 print("Your card balance is " + str(c.balance))
 
